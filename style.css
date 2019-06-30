@@ -1,0 +1,38 @@
+ul{
+	list-style-type: none;
+	margin: auto;
+	padding: 0;
+	overflow: hidden;
+}
+
+li{
+	float: left;
+	display: block;
+	color: rgb(238, 238, 238);
+	text-align: center;
+	padding: 16px;
+	text-decoration: none;
+	background-color: lavender;
+	font-family:  'Verdana';
+}
+  
+li:hover {
+	background-color: #979696;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+#islogin{
+	color: blue;
+}
+
+#content{
+	padding-left:  30px;
+	padding-top: 30px;
+}
+
+h1{
+	font-size: 60px;
+	align: center;
+}

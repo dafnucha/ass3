@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div> 
+            <form name="loginForm" ng-submit="submit()" novalidate>
+                <input type="text" name="uname" ng-model="uname" required>
+                <span ng-show="loginForm.uname.$error.required">This is required! </span>
+                <span ng-show="loginForm.uname.$invalid">Invalid field</span><br><br>
+
+                <input type="password" name="pass" ng-model="pass" required>
+                <span ng-show="loginForm.pass.$error.required">This is required! </span>
+                <span ng-show="loginForm.pass.$invalid">Invalid field</span><br><br>
+                <input ng-disabled="loginForm.$invalid" type="submit" id="submit" value="Submit" onclick="location.href='#!logged';"><br><br>
+                <a href="#!register">register</a>
+            </form>
+        </div>
+    </body>
+</html>

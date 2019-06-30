@@ -1,0 +1,38 @@
+
+<html ng-app="myApp" ng-controller="mainCtrl">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.js"></script>
+    <script src="https://code.angularjs.org/1.7.8/angular-route.js"></script>
+
+    <script src="app.js"></script>
+    <script src="3POICtrl.js"></script>
+    <script src="rgsCtrl.js"></script>
+    <script src="abtCtrl.js"></script>
+    <script src="lgnCtrl.js"></script>
+    <script src="lgdCtrl.js"></script>
+    <script src="POICtrl.js"></script>
+    <script src="fvPOICtrl.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+    <body>
+
+        <header ng-controller="mainCtrl">
+            <p>Hello <label id="user">{{user}}</label><a id="islogin" href={{isloginLink}} ng-click="islogged()">{{isloginText}}</a></p>
+            <h1>Rome</h1>
+        </header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#!">Home</a>
+                </li>
+                <li>
+                    <a href="#!about">About</a>
+                </li>
+                
+            </ul>
+        </nav>
+        <div id="content" ng-view></div>
+    </body>
+
+</html>
