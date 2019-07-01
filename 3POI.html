@@ -1,10 +1,36 @@
 
-<script src="POICtrl.js"></script>
 <div class="gallery">
-    <a target="_blank" ng-click="openPOI()">
+    <a target="_blank" ng-click="openPOI(1)">
         <img ng-src="{{src1}}" alt="" width="400px" height="300px">
     <div class="desc">{{ poi1 }}</div>
     </a>
+</div>
+
+<div class="gallery">
+    <a target="_blank" ng-click="openPOI(2)">
+        <img ng-src="{{src2}}" alt="" width="400px" height="300px">
+    <div class="desc">{{ poi2 }}</div>
+    </a>
+</div>
+
+<div class="gallery">
+    <a target="_blank" ng-click="openPOI(3)">
+        <img ng-src="{{src3}}" alt="" width="400px" height="300px">
+    <div class="desc">{{ poi3 }}</div>
+    </a>
+</div>
+
+<div id="POI">
+    <div class="modal-content" >
+        <span class="close" ng-click="closeModal()">&times;</span>
+        <h2>{{POIName}}</h2>
+        <p>views: {{numOfViews}}</p>
+        <p>description: {{descr}}</p>
+        <p>rank: {{rank}}/5</p>
+        <p>reviews</p>
+        <p>{{rev1}}, {{date1}}</p>
+        <p> {{rev2}}, {{date2}}</p>
+    </div>
 </div>
 
       

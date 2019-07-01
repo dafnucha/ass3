@@ -10,8 +10,13 @@
                 <input type="password" name="pass" ng-model="pass" required>
                 <span ng-show="loginForm.pass.$error.required">This is required! </span>
                 <span ng-show="loginForm.pass.$invalid">Invalid field</span><br><br>
-                <input ng-disabled="loginForm.$invalid" type="submit" id="submit" value="Submit" onclick="location.href='#!logged';"><br><br>
-                <a href="#!register">register</a>
+                <input ng-disabled="loginForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+                <div class="teamR">
+                    new to rome? <a href="#!register">create an acount</a>
+                </div>
+                <div class="teamR">
+                    <a href="#!retrieve">forgot password?</a>
+                </div>
             </form>
         </div>
     </body>

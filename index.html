@@ -10,21 +10,24 @@
     <script src="abtCtrl.js"></script>
     <script src="lgnCtrl.js"></script>
     <script src="lgdCtrl.js"></script>
-    <script src="POICtrl.js"></script>
+    <script src="rtvCtrl.js"></script>
     <script src="fvPOICtrl.js"></script>
     
     <link rel="stylesheet" type="text/css" href="style.css"/>
 
     <body>
 
-        <header ng-controller="mainCtrl">
-            <p>Hello <label id="user">{{user}}</label><a id="islogin" href={{isloginLink}} ng-click="islogged()">{{isloginText}}</a></p>
+        <header>
+            <p>Hello <label id="user">{{ user }}</label><a id="islogin" ng-href="{{isloginLink}}" ng-click="islogged()">{{ isloginText }}</a></p>
             <h1>Rome</h1>
         </header>
         <nav>
             <ul>
                 <li>
-                    <a href="#!">Home</a>
+                    <a ng-href="{{homeLink}}">Home</a>
+                </li>
+                <li>
+                    <a ng-href="">Home</a>
                 </li>
                 <li>
                     <a href="#!about">About</a>

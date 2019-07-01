@@ -1,1 +1,71 @@
-<h>dnkxnewlkm</h>
+<!DOCTYPE html>
+<html>
+    <body>
+        <div> 
+            <form name="registerForm" ng-submit="submit()" novalidate >
+                <div class="form-group" >
+                    <label>first name:</label>
+                    <input type="text" name="fname" ng-model="fname" required ng-pattern = "/^[a-zA-Z\s]*$/">
+                    <span ng-show="registerForm.fname.$error.required">This is required! </span>
+                    <span ng-show="registerForm.fname.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <div class="form-group" >
+                    <label>last name:</label>
+                    <input type="text" name="lname" ng-model="lname" required ng-pattern = "/^[a-zA-Z\s]*$/">
+                    <span ng-show="registerForm.lname.$error.required">This is required! </span>
+                    <span ng-show="registerForm.lname.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <div class="form-group" >
+                    <label>city:</label>
+                    <input type="text" name="city" ng-model="city" required ng-pattern = "/^[a-zA-Z\s]*$/">
+                    <span ng-show="registerForm.city.$error.required">This is required! </span>
+                    <span ng-show="registerForm.city.$invalid">Invalid field</span><br><br>
+                </div>
+                
+                <div class="form-group" >
+                    <label>country:</label>
+                    <select name="country" ng-model="country" ng-options = "item for item in countries" required>
+                    </select>
+                    <span ng-show="registerForm.country.$error.required">This is required! </span>
+                    <span ng-show="registerForm.country.$invalid">Invalid field</span><br><br>
+                </div>
+                <br><br>
+                <div class="form-group" >
+                    <label>email:</label>
+                    <input type="email" name="email" ng-model="email" required >
+                    <span ng-show="registerForm.email.$error.required">This is required! </span>
+                    <span ng-show="registerForm.email.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <div class="form-group" >
+                    <label>categories:</label>
+                    <select multiple ng-multiple="true" name="cat" ng-model="cat" required>
+                        <option ng-repeat="x in categories" value="{{x}}">{{x}}</option>
+                    </select>
+                    <span ng-show="registerForm.cat.$error.required">This is required! </span>
+                    <span ng-show="registerForm.cat.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <div class="form-group" >
+                    <label>the name of your first pet:</label>
+                    <input type="text" name="A1" ng-model="A1" required >
+                    <span ng-show="registerForm.A1.$error.required">This is required! </span>
+                    <span ng-show="registerForm.A1.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <div class="form-group" >
+                    <label>your favorite movie:</label>
+                    <input type="text" name="A2" ng-model="A2" required >
+                    <span ng-show="registerForm.A2.$error.required">This is required! </span>
+                    <span ng-show="registerForm.A2.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <input ng-disabled="registerForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+            </form>
+        </div>
+    </body>
+    <!--onclick="location.href='#!logged';"-->
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div> 
+            <form name="retrieveForm" ng-submit="submit()" novalidate>
+                <div class="form-group" >
+                    <label>username:</label>
+                    <input type="text" name="uname" ng-model="uname" required ng-pattern = "/^[a-zA-Z\s]*$/">
+                    <span ng-show="retrieveForm.uname.$error.required">This is required! </span>
+                    <span ng-show="retrieveForm.uname.$invalid">Invalid field</span><br><br>
+                </div>
+
+
+                <div class="form-group" >
+                    <label>choose a question:</label>
+                    <select name="question" ng-model="question" ng-options = "item for item in questions" required>
+                    </select>
+                    <span ng-show="retrieveForm.question.$error.required">This is required! </span>
+                    <span ng-show="retrieveForm.question.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <div class="form-group" >
+                    <label>answer:</label>
+                    <input type="text" name="answer" ng-model="answer" required>
+                    <span ng-show="retrieveForm.answer.$error.required">This is required! </span>
+                    <span ng-show="retrieveForm.answer.$invalid">Invalid field</span><br><br>
+                </div>
+
+                <input ng-disabled="retrieveForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+            </form>
+        </div>
+    </body>
+</html>

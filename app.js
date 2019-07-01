@@ -1,5 +1,6 @@
-let app = angular.module('myApp', ["ngRoute"]);
 
+
+let app = angular.module('myApp', ["ngRoute"]);
 
 app.config(function($routeProvider)  {
     $routeProvider
@@ -22,12 +23,17 @@ app.config(function($routeProvider)  {
             templateUrl: 'logged.html',
             controller : 'lgdCtrl'
         })
+        .when('/retrieve', {
+            templateUrl: 'retrieve.html',
+            controller : 'rtvCtrl'
+        })
         .otherwise({ redirectTo: "/" });
 });
 
 angular.module('myApp')
 .controller("mainCtrl", function ($scope, $rootScope) {
     $scope.user = "guest";
+    $scope.homeLink = "#!";
     $scope.isloginLink = "#!login";
     $scope.isloginText = " Please log in";
     $scope.islogged = function(){
@@ -35,6 +41,7 @@ angular.module('myApp')
             $scope.isloginLink = "#!login";
         }else{
             $scope.isloginLink = "#!";
+            $scope.homeLink = "#!";
             $scope.user = "guest";
             $scope.isloginText = " Please log in";
         }
@@ -42,6 +49,10 @@ angular.module('myApp')
     $scope.$on('m', function(event, message){
         $scope.user=message.user;
         $scope.isloginText = " Logout";
+        $scope.homeLink = "#!logged";
+        $rootScope.$broadcast('ma', {
+            user: $scope.user
+        })
     })
 });
 /*
