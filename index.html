@@ -18,8 +18,13 @@
     <body>
 
         <header>
-            <p>Hello <label id="user">{{ user }}</label><a id="islogin" ng-href="{{isloginLink}}" ng-click="islogged()">{{ isloginText }}</a></p>
-            <h1>Rome</h1>
+            <div class="rome">
+                <h1>𝑅𝑜𝓂𝑒</h1>
+            </div>
+            <div class="loginUser">
+                <p>Hello <label id="user">{{ user }}</label><a id="islogin" ng-href="{{isloginLink}}" ng-click="islogged()">{{ isloginText }}</a></p>
+                
+            </div>
         </header>
         <nav>
             <ul>
@@ -27,7 +32,7 @@
                     <a ng-href="{{homeLink}}">Home</a>
                 </li>
                 <li>
-                    <a ng-href="">Home</a>
+                    <a ng-href="">POIs</a>
                 </li>
                 <li>
                     <a href="#!about">About</a>

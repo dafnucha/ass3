@@ -12,7 +12,7 @@ li{
 	text-align: center;
 	padding: 16px;
 	text-decoration: none;
-	background-color: lavender;
+	background-color: rgb(227, 243, 214);
 	font-family:  'Verdana';
 }
   
@@ -24,7 +24,7 @@ a{
     text-decoration: none;
 }
 #islogin{
-	color: blue;
+	color: cornflowerblue;
 }
 
 #content{
@@ -34,7 +34,38 @@ a{
 
 h1{
 	font-size: 60px;
-	align: center;
+	text-align: center;
+	font-family:  'Verdana';
+	color: #000000;
+	padding: 60px;
+}
+
+div.about{
+	font-family:  'Verdana';
+	font-size: 20px;
+	text-align: center;
+}
+
+label{
+	font-weight: bold;
+}
+
+span{
+	color: #5f0000;
+	text-shadow: 2px 2px 5px rgb(192, 11, 11);
+}
+
+div.rome{
+	/*background-image: url("italy.jpg") ;*/
+	background-size: 100% 200px;
+	height: 200px;
+}
+
+
+h2{
+	font-family: 'Verdana';
+	font-size: 30px;
+	text-align: center;
 }
 
 #POI {
@@ -47,20 +78,37 @@ h1{
 	width: 100%; /* Full width */
 	height: 100%; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-
+	background-color: rgb(0, 0, 0, 0.5); /* Fallback color */
+	
   }
   
+ div.loginUser{
+	font-family:  'Verdana';
+ } 
 
 .modal-content {
-	background-color: #fefefe;
+	/*background-image: url("flag.jpg");*/
+	background-repeat: no-repeat;
+	background-size: 110%;
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
 	width: 80%;
 	font-family:  'Verdana';
 }
+
+#user{
+	font-weight: normal;
+}
+
+#crtacnt{
+	color: cornflowerblue;
+}
   
+#rtvpass{
+	color: cornflowerblue;
+
+}
 
 .close {
 	color: #000000;
@@ -96,11 +144,14 @@ div.gallery img {
 div.desc {
 	padding: 45px;
 	text-align: center;
+	font-family:  'Verdana';
+	font-size: 15px;
 }
 	
 div.teamR {
 	margin: 25px;
 	float: left;
+	font-family: 'Verdana';
 }
 
 div.popgallery {
@@ -133,5 +184,11 @@ div.favPOI{
 }
 
 div.text{
-	text-align: center;
+	float: center;
+	font-family:  'Verdana';
+}
+
+div.form-group{
+	font-family:  'Verdana';
+
 }

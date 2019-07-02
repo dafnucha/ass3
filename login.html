@@ -3,19 +3,25 @@
     <body>
         <div> 
             <form name="loginForm" ng-submit="submit()" novalidate>
-                <input type="text" name="uname" ng-model="uname" required>
-                <span ng-show="loginForm.uname.$error.required">This is required! </span>
-                <span ng-show="loginForm.uname.$invalid">Invalid field</span><br><br>
+                <div class="form-group" >
+                    <p><label>User Name:</label></p>
+                    <input type="text" name="uname" ng-model="uname" required>
+                    <span ng-show="!loginForm.uname.$pristine && loginForm.uname.$error.required">This is required! </span>
+                    <span ng-show="!loginForm.uname.$pristine && loginForm.uname.$invalid">Invalid field</span><br><br>
+                </div>
+                <div class="form-group" >
+                    <p><label>Password:</label></p>
+                    <input type="password" name="pass" ng-model="pass" required>
+                    <span ng-show="!loginForm.pass.$pristine && loginForm.pass.$error.required">This is required! </span>
+                    <span ng-show="!loginForm.pass.$pristine && loginForm.pass.$invalid">Invalid field</span><br><br>
+                </div>
 
-                <input type="password" name="pass" ng-model="pass" required>
-                <span ng-show="loginForm.pass.$error.required">This is required! </span>
-                <span ng-show="loginForm.pass.$invalid">Invalid field</span><br><br>
-                <input ng-disabled="loginForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+                <input ng-disabled="loginForm.$pristine || loginForm.$invalid" type="submit" id="submit" value="Submit" ><br>
                 <div class="teamR">
-                    new to rome? <a href="#!register">create an acount</a>
+                    New? <a id="crtacnt" href="#!register">Create an account</a>
                 </div>
                 <div class="teamR">
-                    <a href="#!retrieve">forgot password?</a>
+                    <a id="rtvpass" href="#!retrieve">Forgot Password?</a>
                 </div>
             </form>
         </div>

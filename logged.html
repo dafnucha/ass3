@@ -1,6 +1,6 @@
 <html>
     <div class="popPOI">
-        <h2 align="center">popular point of interest</h2>
+        <h2 align="center">Recommended for you</h2>
         <div class="popgallery">
             <a target="_blank" ng-click="openPOI(1)">
                 <img ng-src="{{src1}}" alt="" width="400px" height="300px">
@@ -17,7 +17,7 @@
     </div>
 
     <div class="favPOI">
-        <h2 align="center">Favotire point of interest</h2>
+        <h2 align="center">Favorite points of interest</h2>
         <div class="popgallery" ng-hide="hidePOI1()">
             <a target="_blank" ng-click="openPOI(3)">
                 <img ng-src="{{src3}}" alt="" width="400px" height="300px">
@@ -33,20 +33,20 @@
         </div>
 
         <div ng-hide="hideText()" class="text">
-            you have no favorite POI
+            You have no saved POIs
         </div>
     </div>
 
     <div id="POI">
-        <div class="modal-content" >
+        <div class="modal-content">
             <span class="close" ng-click="closeModal()">&times;</span>
             <h2>{{POIName}}</h2>
-            <p>views: {{numOfViews}}</p>
-            <p>description: {{descr}}</p>
-            <p>rank: {{rank}}/5</p>
-            <p>reviews</p>
-            <p>{{rev1}}, {{date1}}</p>
-            <p> {{rev2}}, {{date2}}</p>
+            <p>Views: {{numOfViews}}</p>
+            <p>Description: {{descr}}</p>
+            <p>Rank: {{rank}}/5</p>
+            <p>Reviews:</p>
+            <p>{{rev1}}, Date: {{date1}}</p>
+            <p>{{rev2}}, Date: {{date2}}</p>
         </div>
     </div>
 </html>
