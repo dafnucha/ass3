@@ -27,6 +27,10 @@ app.config(function($routeProvider)  {
             templateUrl: 'retrieve.html',
             controller : 'rtvCtrl'
         })
+        .when('/POIs', {
+            templateUrl: 'POI.html',
+            controller : 'POICtrl'
+        })
         .otherwise({ redirectTo: "/" });
 });
 

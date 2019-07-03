@@ -1,4 +1,4 @@
-<html>
+<html><!--
     <div ng-controller="POICtrl">
             <ng-template>
                 <div>
@@ -10,5 +10,43 @@
                     </button>
                 </div>
             </ng-template>
+    </div>-->
+
+    <form name="sortForm" ng-submit="submitSort()" novalidate >
+        <div class="order">
+            <label>sort by:</label>
+            <select name="sort" ng-model="sort" ng-options = "item for item in sorts" required>
+            </select>
+            <input ng-disabled="registerForm.$pristine || registerForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+        </div>
+    </form>
+
+    <form name="filterForm" ng-submit="submit()" novalidate >
+        <div class="order">
+            <label>filter by:</label>
+            <select name="category" ng-model="category" ng-options = "item for item in categories" required>
+            </select>
+            <input ng-disabled="registerForm.$pristine || registerForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+        </div>
+    </form>
+
+    <div class="gallery" ng-repeat="POI in POIs">
+        <a target="_blank" ng-click="openPOI(POI.ID)">
+            <img ng-src="{{POI.Picture}}" alt="" width="400px" height="300px">
+        <div class="desc">{{POI.Name}}</div>
+        </a>
+    </div>
+
+    <div id="POI">
+        <div class="modal-content" >
+            <span class="close" ng-click="closeModal()">&times;</span>
+            <h2>{{POIName}}</h2>
+            <p>views: {{numOfViews}}</p>
+            <p>description: {{descr}}</p>
+            <p>rank: {{rank}}/5</p>
+            <p>reviews</p>
+            <p>{{rev1}}, {{date1}}</p>
+            <p> {{rev2}}, {{date2}}</p>
+        </div>
     </div>
 </html>
