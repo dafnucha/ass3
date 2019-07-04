@@ -1,3 +1,4 @@
+
 ul{
 	list-style-type: none;
 	margin: auto;
@@ -87,9 +88,8 @@ h2{
  } 
 
 .modal-content {
-	/*background-image: url("flag.jpg");*/
-	background-repeat: no-repeat;
-	background-size: 110%;
+	/*background-image: url("p.jpg");*/
+	background: rgb(255, 255, 255);
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
@@ -192,3 +192,11 @@ div.form-group{
 	font-family:  'Verdana';
 
 }
+
+div.POIs{
+	margin: 25px;
+	float: left;
+	width: 450px;
+	height: 450px;
+}
+
