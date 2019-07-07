@@ -1,3 +1,32 @@
+<!DOCTYPE html>
 <html>
+
+    <div ng-hide="hideText()" class="text">
+        you don't have favorite POI
+    </div>
+
+    <div ng-model="POIs" ng-repeat="POI in fav" class="POIs">
+           <img src="favorite.png" width="30px" height="30px" ng-click="remove(POI.ID)">
+        <div class="gallery">
+            <a target="_blank" ng-click="openPOI(POI.ID, POI.Name)">
+                <img ng-src="{{POI.Picture}}" alt="" width="400px" height="300px">
+            <div class="desc">{{POI.Name}}</div>
+            </a>
+        </div>
+    </div>
+
+    <div id="POI">
+        <div class="modal-content" >
+            <span class="close" ng-click="closeModal()">&times;</span>
+            <img src="favorite.png"  ng-click="remove(-1)" width="30px" height="30px" id="icon">
+            <h2>{{POIName}}</h2>
+            <p>views: {{numOfViews}}</p>
+            <p>description: {{descr}}</p>
+            <p>rank: {{rank}}/5</p>
+            <p>reviews</p>
+            <p>{{rev1}}, {{date1}}</p>
+            <p> {{rev2}}, {{date2}}</p>
+        </div>
+    </div>
     
 </html>

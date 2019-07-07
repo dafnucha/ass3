@@ -31,15 +31,20 @@ app.config(function($routeProvider)  {
             templateUrl: 'POI.html',
             controller : 'POICtrl'
         })
+        .when('/fav', {
+            templateUrl: 'favPOI.html',
+            controller : 'fvPOICtrl'
+        })
         .otherwise({ redirectTo: "/" });
 });
 
 angular.module('myApp')
-.controller("mainCtrl", function ($scope, $rootScope) {
+.controller("mainCtrl", function ($scope, $rootScope, $http) {
     $scope.user = "guest";
     $scope.homeLink = "#!";
     $scope.isloginLink = "#!login";
     $scope.isloginText = " Please log in";
+    $scope.fav = [];
     $scope.islogged = function(){
         if($scope.user == "guest"){
             $scope.isloginLink = "#!login";
@@ -52,10 +57,41 @@ angular.module('myApp')
     }
     $scope.$on('m', function(event, message){
         $scope.user=message.user;
+        getFav();
         $scope.isloginText = " Logout";
         $scope.homeLink = "#!logged";
         $rootScope.$broadcast('ma', {
             user: $scope.user
+        })
+        $rootScope.$broadcast('mb', {
+            user: $scope.user,
+            new: true
+        })
+    })
+
+    function getFav(){
+        $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
+            $scope.fav = response.data;
+        });
+    }
+
+    $scope.$on('requestFav', function(event, message){
+        var x = $scope.fav;
+        $rootScope.$broadcast('sendFav', {
+            fav: x
+        })
+    })
+
+    $scope.$on('removeFromFav', function(event, message){
+        var x = [];
+        for(var i = 0; i < $scope.fav.length; i++){
+            if($scope.fav[i].ID != message.id){
+                x.push($scope.fav[i]);
+            }
+        }
+        $scope.fav = x;
+        $rootScope.$broadcast('sendFav', {
+            fav: x
         })
     })
 });

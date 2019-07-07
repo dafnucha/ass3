@@ -9,11 +9,13 @@ angular.module('myApp')
     $scope.$on('ma', function(event, message){
         $scope.user = message.user;
     })
+
     if($scope.user != "guest"){
         $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
             $scope.fav = response.data;
         });
     }
+    
     $scope.POIs = [];
     $scope.allPOIs = [];
     $scope.POIsRank = [];
@@ -49,7 +51,9 @@ angular.module('myApp')
         var x = [];
         for(var i = 0; i< $scope.POIsRank.length; i++){
             var y = $scope.POIsRank[i][0];
-            x.push(y);
+            if($scope.POIs.includes(y)){
+                x.push(y);
+            }
         }
         $scope.POIs = x;
     }
