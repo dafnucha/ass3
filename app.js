@@ -39,77 +39,92 @@ app.config(function($routeProvider)  {
 });
 
 angular.module('myApp')
-.controller("mainCtrl", function ($scope, $rootScope, $http) {
-    $scope.user = "guest";
-    $scope.homeLink = "#!";
-    $scope.isloginLink = "#!login";
-    $scope.isloginText = " Please log in";
-    $scope.fav = [];
-    $scope.islogged = function(){
-        if($scope.user == "guest"){
-            $scope.isloginLink = "#!login";
-        }else{
-            $scope.isloginLink = "#!";
-            $scope.homeLink = "#!";
-            $scope.user = "guest";
-            $scope.isloginText = " Please log in";
-        }
-    }
-    $scope.$on('m', function(event, message){
-        $scope.user=message.user;
-        getFav();
-        $scope.isloginText = " Logout";
-        $scope.homeLink = "#!logged";
-        $rootScope.$broadcast('ma', {
-            user: $scope.user
-        })
-        $rootScope.$broadcast('mb', {
-            user: $scope.user,
-            new: true
-        })
-    })
+.controller("mainCtrl", function ($scope, $http) {
 
     function getFav(){
         $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
             $scope.fav = response.data;
+            sessionStorage.setItem("fav",JSON.stringify($scope.fav));
         });
     }
 
-    $scope.$on('requestFav', function(event, message){
-        var x = $scope.fav;
-        $rootScope.$broadcast('sendFav', {
-            fav: x
-        })
+    $scope.$on('m', function(event, message){
+        $scope.user=sessionStorage.getItem("user");
+        /*
+        if(!$scope.user || $scope.user=="guest"){
+            $scope.user = "guest";
+            $scope.logged2=true;
+            sessionStorage.setItem("user","guest");
+            $scope.homeLink = "#!";
+            $scope.isloginLink = "#!login";
+            $scope.isloginText = " Please log in";
+            $scope.fav = [];
+            sessionStorage.setItem("fav",$scope.fav);
+        }
+        else{
+            */
+                getFav();
+                $scope.isloginText = " Logout";
+                $scope.homeLink = "#!logged";
+                $scope.isloginLink = "#!";
+                setTimeout(()=>{
+                    $scope.countFav = $scope.fav.length;
+                },1000);
+                $scope.logged2= false;
+            //}
+    })
+    
+    $scope.user=sessionStorage.getItem("user");
+    if(!$scope.user || $scope.user=="guest"){
+        $scope.user = "guest";
+        $scope.logged2=true;
+        sessionStorage.setItem("user","guest");
+        $scope.homeLink = "#!";
+        $scope.isloginLink = "#!login";
+        $scope.isloginText = " Please log in";
+        $scope.fav = [];
+        sessionStorage.setItem("fav",$scope.fav);
+    }
+    else{
+            //getFav();
+            $scope.fav=JSON.parse(sessionStorage.getItem("fav"));
+            $scope.isloginText = " Logout";
+            $scope.homeLink = "#!logged";
+            $scope.isloginLink = "#!";
+            $scope.countFav = $scope.fav.length;
+            $scope.logged2= false;
+    }
+
+    $scope.$on('favChanged', function(event,message){
+        $scope.fav=JSON.parse(sessionStorage.getItem("fav"));
+        $scope.countFav = $scope.fav.length;
     })
 
-    $scope.$on('removeFromFav', function(event, message){
-        var x = [];
-        for(var i = 0; i < $scope.fav.length; i++){
-            if($scope.fav[i].ID != message.id){
-                x.push($scope.fav[i]);
-            }
-        }
-        $scope.fav = x;
-        $rootScope.$broadcast('sendFav', {
-            fav: x
-        })
-    })
-});
-/*
-angular.module('myApp')
-.controller("mainCtrl", function ($scope, $rootScope) {
-    $scope.user = "guest"
-    $scope.islogged=function(){
-        if(document.getElementById("user").innerHTML=="guest"){
-            document.getElementById("islogin").href="#!login";
+
+    $scope.islogged = function(){
+        if($scope.user == "guest"){
+            $scope.isloginLink = "#!login";
         }else{
-            document.getElementById("islogin").href="#!";
-            document.getElementById("user").innerHTML = "guest";
-            document.getElementById("islogin").innerHTML = " Please log in";
+            $scope.user = "guest";
+            $scope.logged2=true;
+            sessionStorage.setItem("user","guest");
+            $scope.homeLink = "#!";
+            $scope.isloginLink = "#!";
+            $scope.isloginText = " Please log in";
+            $scope.fav = [];
+            sessionStorage.setItem("fav",$scope.fav);
         }
     }
-    $scope.$on('m', function(event, message){
-        $scope.l=message.user;
-    })
+
+    
+
+
+
+
+    $scope.isGuest= function(){
+        return $scope.logged2;
+    }
+    
+
+    
 });
-*/

@@ -5,7 +5,7 @@
             <label>sort by:</label>
             <select name="sort" ng-model="sort" ng-options = "item for item in sorts" required>
             </select>
-            <input ng-disabled="sortForm.$pristine || sortForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+            <input ng-disabled="sortForm.$pristine || sortForm.$invalid" type="submit" id="submit" value="Sort" ><br><br>
         </div>
     </form>
 
@@ -14,7 +14,7 @@
             <label>search:</label>
             <input type="text" name="search" ng-model="search" required>
             </select>
-            <input ng-disabled="searchForm.$pristine || searchForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+            <input ng-disabled="searchForm.$pristine || searchForm.$invalid" type="submit" id="submit" value="Search" ><br><br>
         </div>
     </form>
 
@@ -23,7 +23,7 @@
             <label>filter by:</label>
             <select name="category" ng-model="category" ng-options = "item for item in categories" required>
             </select>
-            <input ng-disabled="filterForm.$pristine || filterForm.$invalid" type="submit" id="submit" value="Submit" ><br><br>
+            <input ng-disabled="filterForm.$pristine || filterForm.$invalid" type="submit" id="submit" value="Filter" ><br><br>
         </div>
     </form>
 

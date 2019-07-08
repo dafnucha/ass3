@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
+    <form name="sortForm" ng-submit="submitSort()" novalidate >
+        <div class="order">
+            <label>sort by:</label>
+            <select name="sort" ng-model="sort" ng-options = "item for item in sorts" required>
+            </select>
+            <input ng-disabled="sortForm.$pristine || sortForm.$invalid" type="submit" id="submit" value="Sort" ><br><br>
+        </div>
+    </form>
+
+    <form name="filterForm" ng-submit="submit()" novalidate >
+        <div class="order">
+            <label>filter by:</label>
+            <select name="category" ng-model="category" ng-options = "item for item in categories" required>
+            </select>
+            <input ng-disabled="filterForm.$pristine || filterForm.$invalid" type="submit" id="submit" value="Filter" ><br><br>
+        </div>
+    </form>
 
     <div ng-hide="hideText()" class="text">
         you don't have favorite POI
     </div>
 
-    <div ng-model="POIs" ng-repeat="POI in fav" class="POIs">
+    <div ng-model="POIs" ng-repeat="POI in favorite track by $index" class="POIs">
            <img src="favorite.png" width="30px" height="30px" ng-click="remove(POI.ID)">
         <div class="gallery">
             <a target="_blank" ng-click="openPOI(POI.ID, POI.Name)">

@@ -1,7 +1,6 @@
 
 angular.module('myApp')
 .controller("lgdCtrl", function ($scope, $http, $window, $rootScope) {
-    var user;
     $scope.$on('ma', function(event, message){
         $scope.user = message.user;
     })

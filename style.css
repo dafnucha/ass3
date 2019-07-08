@@ -49,12 +49,15 @@ div.about{
 
 label{
 	font-weight: bold;
+	font-family: 'Verdana';
+
 }
 
 span{
 	color: #5f0000;
 	text-shadow: 2px 2px 5px rgb(192, 11, 11);
 }
+
 
 div.rome{
 	/*background-image: url("italy.jpg") ;*/
@@ -115,6 +118,12 @@ h2{
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
+	text-shadow: none;
+
+}
+
+div.favpois{
+	float: right;
 }
   
 .close:hover,
@@ -188,10 +197,6 @@ div.text{
 	font-family:  'Verdana';
 }
 
-div.form-group{
-	font-family:  'Verdana';
-
-}
 
 div.POIs{
 	margin: 25px;

@@ -23,8 +23,11 @@
                 <h1>𝑅𝑜𝓂𝑒</h1>
             </div>
             <div class="loginUser">
-                <p>Hello <label id="user">{{ user }}</label><a id="islogin" ng-href="{{isloginLink}}" ng-click="islogged()">{{ isloginText }}</a></p>
-                
+                <p>Hello <label id="user">{{ user }}</label><a id="islogin" ng-href="{{isloginLink}}"  ng-click="islogged()">{{ isloginText }}</a></p>
+            </div>
+            <div class="favpois" ng-hide="isGuest()">
+                <a id="favIcon" ng-href="#!fav"><img ng-src="heart.png" width="30px" height="30px"></a>
+                <label id="countFav" ng-model="countFav">{{ countFav }}</label>
             </div>
         </header>
         <nav>
@@ -37,9 +40,6 @@
                 </li>
                 <li>
                     <a href="#!about">About</a>
-                </li>
-                <li>
-                    <a href="#!fav">fav</a>
                 </li>
             </ul>
         </nav>

@@ -1,32 +1,95 @@
 angular.module('myApp')
 .controller("fvPOICtrl", function ($scope, $http, $window, $rootScope) {
-
+    
     $scope.databaseFav = [];
-    $scope.fav = [];
+    $scope.favorite = JSON.parse(sessionStorage.getItem("fav"));
     
     $scope.$on('mb', function(event, message){
         $scope.user = message.user;
     })
 
-    if($scope.user != "guest"){
-        $rootScope.$broadcast('requestFav', {})
+    $scope.remove = function(id){
+        var x=[];
+        for(var i=0; i<$scope.favorite.length; i++){
+            if((id !=-1 && id!=$scope.favorite[i].ID) || (id==-1 && $scope.POIID!=$scope.favorite[i].ID)){
+                x.push($scope.favorite[i]);
+            }
+        }
+        $scope.closeModal();
+        $scope.favorite=x;
+        sessionStorage.setItem("fav",JSON.stringify(x));
+        $rootScope.$broadcast('favChanged', {
+            id: $scope.POIID
+        })
+       
     }
 
-    $scope.$on('sendFav', function(event, message){
-        $scope.fav.push(message.fav);
+    $scope.$on('favChanged', function(event,message){
+        $scope.favorite=JSON.parse(sessionStorage.getItem("fav"));
+
     })
 
-    $scope.remove = function(id){
-        $scope.fav = [];
-        if(id == -1){
-            $rootScope.$broadcast('removeFromFav', {
-                id: $scope.POIID
-            })
+    $scope.POIsRank = [];
+    $scope.rank = [];
+    $scope.categories = [];
+    $scope.sorts = ["rank"];
+    $scope.categories.push("show all");
+    $http.get('http://localhost:3000/getCategories/').then(function(response){
+        for(var i = 0; i < Object.keys(response.data).length; i++){
+            $scope.categories.push(response.data[i].Name);
+        }
+    });
+    var x = 0;
+    for(var i=0; i<$scope.favorite.length; i++){
+        setTimeout((x) => {
+            $http.get('http://localhost:3000/getPOIDetails/' + $scope.favorite[x].ID).then(function(response2){
+                $scope.POIsRank.push([response2.data[2], $scope.favorite[x]]);
+            }, function errorCallback(response3) {
+                console.log(response3);
+            });
+        }, 0, i)
+
+    }
+
+    
+    function includ(y){
+        for(var i=0; i<$scope.favorite.length; i++){
+            if($scope.favorite[i].ID==y.ID)
+                return true;
+        }
+        return false;
+    }
+
+    $scope.submitSort = function(){
+        $scope.POIsRank.sort(function(a, b){return a[0] - b[0]});
+        $scope.POIsRank.reverse();
+        var x = [];
+        for(var i = 0; i< $scope.POIsRank.length; i++){
+            var y = $scope.POIsRank[i][1];
+            if(includ(y)){
+                x.push(y);
+            }
+        }
+        $scope.favorite = x;
+    }
+
+
+    $scope.submit = function(){
+        if($scope.category == "show all"){
+            $scope.favorite=JSON.parse(sessionStorage.getItem("fav"));
         }
         else{
-            $rootScope.$broadcast('removeFromFav', {
-                id: $scope.POIID
-            })
+            var x = [];
+            $scope.favorite=JSON.parse(sessionStorage.getItem("fav"));
+            $http.get('http://localhost:3000/getPOIBy/' + $scope.category).then(function(response){
+                for(var i = 0; i < Object.keys(response.data).length; i++){
+                    var y=response.data[i];
+                    if(includ(y))
+                        x.push(y);
+                }
+                $scope.favorite = x;
+            });
+
         }
     }
 
@@ -37,7 +100,7 @@ angular.module('myApp')
     }
 
     $scope.hideText = function(){
-        return $scope.fav.length != 0;
+        return $scope.favorite.length != 0;
     }
 
 
@@ -57,10 +120,6 @@ angular.module('myApp')
         });
     }
 
-    $scope.removefav = function(id){
-
-    }
-
     $scope.closeModal = function(){
         document.getElementById('POI').style.display = "none";
     }
@@ -76,4 +135,5 @@ angular.module('myApp')
             document.getElementById('POI').style.display = "none";
         }
     }
+    
 });

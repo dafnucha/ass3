@@ -1,19 +1,12 @@
 angular.module('myApp')
-.controller("POICtrl", function ($scope, $http, $window) {
-    /*
-    $scope.cancel = function(){
-        $mod.dismiss('cancel');
-    }
-    */
+.controller("POICtrl", function ($scope, $http, $window, $rootScope) {
     self = this;
     $scope.$on('ma', function(event, message){
         $scope.user = message.user;
     })
 
     if($scope.user != "guest"){
-        $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
-            $scope.fav = response.data;
-        });
+        $scope.fav=JSON.parse(sessionStorage.getItem("fav"));
     }
     
     $scope.POIs = [];
@@ -22,6 +15,7 @@ angular.module('myApp')
     $scope.rank = [];
     $scope.categories = [];
     $scope.sorts = ["rank"];
+    var y = 0;
     $scope.categories.push("show all");
     $http.get('http://localhost:3000/getCategories/').then(function(response){
         for(var i = 0; i < Object.keys(response.data).length; i++){
@@ -30,28 +24,34 @@ angular.module('myApp')
                 for(var j = 0; j < Object.keys(response1.data).length; j++){
                     $scope.POIs.push(response1.data[j]);
                     $scope.allPOIs.push(response1.data[j]);
-                    $http.get('http://localhost:3000/getPOIDetails/' + response1.data[j].ID).then(function(response2){
-                        $scope.rank.push(response2.data[2]);
-                    }, function errorCallback(response3) {
-                        console.log(response3);
-                    });
+                    setTimeout((x, z) => {
+                        $http.get('http://localhost:3000/getPOIDetails/' + z).then(function(response2){
+                            $scope.POIsRank.push([$scope.allPOIs[x], response2.data[2]]);
+                        }, function errorCallback(response3) {
+                            console.log(response3);
+                        });
+                    }, 0, y, response1.data[j].ID);
+                    y++;
                 }
             });
         }
     });
 
-    setTimeout(() =>{
-        for(var i = 0; i < $scope.rank.length; i++){
-            $scope.POIsRank.push([$scope.allPOIs[i], $scope.rank[i]]);
+    function includ(y){
+        for(var i=0; i<$scope.POIs.length; i++){
+            if($scope.POIs[i].ID==y.ID)
+                return true;
         }
-    }, 4000)
+        return false;
+    }
+
     $scope.submitSort = function(){
         $scope.POIsRank.sort(function(a, b){return a[1] - b[1]});
         $scope.POIsRank.reverse();
         var x = [];
         for(var i = 0; i< $scope.POIsRank.length; i++){
             var y = $scope.POIsRank[i][0];
-            if($scope.POIs.includes(y)){
+            if(includ(y)){
                 x.push(y);
             }
         }
@@ -71,6 +71,10 @@ angular.module('myApp')
     $scope.hideText = function(){
         return $scope.POIs.length != 0;
     }
+
+    $scope.$on('favChanged', function(event,message){
+        $scope.fav=JSON.parse(sessionStorage.getItem("fav"));
+    })
 
     $scope.isguest = function(id){
         if($scope.user == "guest"){
@@ -112,10 +116,19 @@ angular.module('myApp')
         }
     }
 
+    function searchID(id){
+        for(var i=0; i<$scope.POIs.length; i++){
+            if($scope.POIs[i].ID==id){
+                return $scope.POIs[i];
+            }
+        }
+    }
+
     $scope.addfav = function(id){
         if(id == -1){
             id = $scope.POIID;
         }
+        /*
         $http.post('http://localhost:3000/addToFavorite',
             {"POIID": id,
             "userName": $scope.user
@@ -126,12 +139,17 @@ angular.module('myApp')
                 });
             }, function errorCallback(response) {
         });
+        */
+        $scope.fav.push(searchID(id));
+        sessionStorage.setItem("fav",JSON.stringify($scope.fav));
+        $rootScope.$broadcast('favChanged',{});
     }
 
     $scope.removefav = function(id){
         if(id == -1){
             id = $scope.POIID;
         }
+        /*
         var req = {
             method: 'DELETE',
             url: 'http://localhost:3000/removeFromFavorite',
@@ -150,6 +168,19 @@ angular.module('myApp')
             });
         }, function errorCallback(response) {}
         );
+        */
+       var x=[];
+       for(var i=0; i<$scope.fav.length; i++){
+           if((id !=-1 && id!=$scope.fav[i].ID) || (id==-1 && $scope.POIID!=$scope.fav[i].ID)){
+               x.push($scope.fav[i]);
+           }
+       }
+       $scope.closeModal();
+       $scope.fav=x;
+       sessionStorage.setItem("fav",JSON.stringify(x));
+       $rootScope.$broadcast('favChanged', {
+           id: $scope.POIID
+       })
     }
 
     $scope.submit = function(){
