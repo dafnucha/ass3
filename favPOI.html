@@ -41,9 +41,13 @@
             <p>description: {{descr}}</p>
             <p>rank: {{rank}}/5</p>
             <p>reviews</p>
-            <p>{{rev1}}, {{date1}}</p>
-            <p> {{rev2}}, {{date2}}</p>
+            <p>{{rev1}} {{date1}}</p>
+            <p> {{rev2}} {{date2}}</p>
         </div>
+    </div>
+
+    <div class="savefav">
+        <button ng-click="saveToData()">Save to database</button>
     </div>
     
 </html>

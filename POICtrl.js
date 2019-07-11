@@ -1,5 +1,5 @@
 angular.module('myApp')
-.controller("POICtrl", function ($scope, $http, $window, $rootScope) {
+.controller("POICtrl", function ($scope, $http, $window, $rootScope, $route) {
     self = this;
     $scope.$on('ma', function(event, message){
         $scope.user = message.user;
@@ -128,18 +128,6 @@ angular.module('myApp')
         if(id == -1){
             id = $scope.POIID;
         }
-        /*
-        $http.post('http://localhost:3000/addToFavorite',
-            {"POIID": id,
-            "userName": $scope.user
-            }).then(function(response){ 
-                $window.alert("POI added to favorite");
-                $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
-                    $scope.fav = response.data;
-                });
-            }, function errorCallback(response) {
-        });
-        */
         $scope.fav.push(searchID(id));
         sessionStorage.setItem("fav",JSON.stringify($scope.fav));
         $rootScope.$broadcast('favChanged',{});
@@ -149,26 +137,6 @@ angular.module('myApp')
         if(id == -1){
             id = $scope.POIID;
         }
-        /*
-        var req = {
-            method: 'DELETE',
-            url: 'http://localhost:3000/removeFromFavorite',
-            headers: {
-                'Content-Type': "application/json"
-            },
-            data: {
-                "POIID": id,
-                "userName": $scope.user
-            }
-        }
-        $http(req).then(function(response){ 
-            $window.alert("POI removed from favorite");
-            $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
-                $scope.fav = response.data;
-            });
-        }, function errorCallback(response) {}
-        );
-        */
        var x=[];
        for(var i=0; i<$scope.fav.length; i++){
            if((id !=-1 && id!=$scope.fav[i].ID) || (id==-1 && $scope.POIID!=$scope.fav[i].ID)){
@@ -212,27 +180,71 @@ angular.module('myApp')
             $scope.numOfViews = response.data[0];
             $scope.descr = response.data[1];
             $scope.rank = response.data[2];
-            $scope.rev1 = response.data[3][0];
-            $scope.date1 = response.data[3][1];
-            $scope.rev2 = response.data[4][0];
-            $scope.date2 = response.data[4][1];
-            
+            if(response.data[3]){
+                $scope.rev1 = response.data[3][0] + ",";
+                $scope.date1 = response.data[3][1];
+                if(response.data[4]){
+                    $scope.rev2 = response.data[4][0] + ",";
+                    $scope.date2 = response.data[4][1];
+                }
+                else{
+                    $scope.rev2 = "";
+                    $scope.date2 = "";
+                }
+            }
+            else{
+                $scope.rev1 = "There are no reviews";
+                $scope.date1 = "";
+                $scope.rev2 = "";
+                $scope.date2 = "";
+            }
         });
     }
 
     $scope.closeModal = function(){
         document.getElementById('POI').style.display = "none";
+        document.getElementById('review').style.display = "none";
+        document.getElementById('revText').value = "";
     }
     
     $window.onclick = function(event) {
         if (event.target == document.getElementById('POI')) {
             document.getElementById('POI').style.display = "none";
         }
+        if (event.target == document.getElementById('review')) {
+            document.getElementById('review').style.display = "none";
+            document.getElementById('revText').value = "";
+        }
     }
     
     $window.onkeydown = function(event){
         if(event.code=="Escape"){
             document.getElementById('POI').style.display = "none";
+            document.getElementById('review').style.display = "none";
+            document.getElementById('revText').value = "";
         }
     }
+
+    $scope.openReview = function(num, name){
+        $scope.POIID = num;
+        $scope.POIName = name;
+        document.getElementById('review').style.display = "block";
+    }
+
+    $scope.submitReview = function(){
+        var text = $scope.revText;
+        if(!text){
+            text = "NULL";
+        }
+        $http.post('http://localhost:3000/addReview',{
+            "POIID": $scope.POIID,
+            "userName":  $scope.user,
+            "review": text,
+            "rank": $scope.rank
+        }).then(function(response){}, function errorCallback(response) {});
+        $window.alert("review added");
+        $scope.closeModal();
+        $route.reload();
+    }
+
 });

@@ -9,11 +9,7 @@ angular.module('myApp')
                 $window.alert("wrong password or username");
             }
             else{
-                
-
-                
                 sessionStorage.setItem("user",userName );
-                
                 $rootScope.$broadcast('m', {
                     user: userName
                 })

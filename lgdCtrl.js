@@ -1,6 +1,6 @@
 
 angular.module('myApp')
-.controller("lgdCtrl", function ($scope, $http, $window, $rootScope) {
+.controller("lgdCtrl", function ($scope, $http, $window, $route) {
     $scope.$on('ma', function(event, message){
         $scope.user = message.user;
     })
@@ -13,33 +13,120 @@ angular.module('myApp')
         $scope.poi2 = response.data[1][1];
         $scope.src2 = response.data[1][2];
     });
-
+/*
     $http.get('http://localhost:3000/showSavedPOI/'+ $scope.user).then(function(response){
+        var fav = JSON.parse(sessionStorage.getItem("fav"));
         if(Object.keys(response.data).length == 0){
             $scope.hideText1 = "false";
             $scope.hidePOI11 = "true";
             $scope.hidePOI21 = "true";
         }
         else if(Object.keys(response.data).length == 1){
-            $scope.hideText1 = "true";
-            $scope.hidePOI11 = "false";
-            $scope.hidePOI21 = "true";
-            $scope.poi3 = response.data[0].Name;
-            $scope.src3 = response.data[0].Picture;
-            $scope.POIID3 = response.data[0].ID;
+            if(fav.contain(fav, response.data[0].ID)){
+                $scope.hideText1 = "true";
+                $scope.hidePOI11 = "false";
+                $scope.hidePOI21 = "true";
+                $scope.poi3 = response.data[0].Name;
+                $scope.src3 = response.data[0].Picture;
+                $scope.POIID3 = response.data[0].ID;
+            }
+            else if(fav.length > 1){
+                $scope.hideText1 = "true";
+                $scope.hidePOI11 = "false";
+                $scope.hidePOI21 = "false";
+                $scope.poi3 = fav[fav.length-1].Name;
+                $scope.src3 = fav[fav.length-1].Picture;
+                $scope.POIID3 = fav[fav.length-1].ID;
+                $scope.poi4 = fav[fav.length-2].Name;
+                $scope.src4 = fav[fav.length-2].Picture;
+                $scope.POIID4 = fav[fav.length-2].ID;
+            }
+            else if(fav.length == 1){
+                $scope.hideText1 = "true";
+                $scope.hidePOI11 = "false";
+                $scope.hidePOI21 = "true";
+                $scope.poi3 = fav[0].Name;
+                $scope.src3 = fav[0].Picture;
+                $scope.POIID3 = fav[0].ID;
+            }
+            else{
+                $scope.hideText1 = "false";
+                $scope.hidePOI11 = "true";
+                $scope.hidePOI21 = "true";
+            }
         }
         else{
+            if(contain(fav, response.data[0].ID) && contain(fav, response.data[1].ID)){
+                $scope.hideText1 = "true";
+                $scope.hidePOI11 = "false";
+                $scope.hidePOI21 = "true";
+                $scope.poi3 = response.data[0].Name;
+                $scope.src3 = response.data[0].Picture;
+                $scope.POIID3 = response.data[0].ID;
+            }
+
+        }            else if(fav.length > 1){
             $scope.hideText1 = "true";
             $scope.hidePOI11 = "false";
             $scope.hidePOI21 = "false";
-            $scope.poi3 = response.data[0].Name;
-            $scope.src3 = response.data[0].Picture;
-            $scope.POIID3 = response.data[0].ID;
-            $scope.poi4 = response.data[1].Name;
-            $scope.src4 = response.data[1].Picture;
-            $scope.POIID4 = response.data[1].ID;
+            $scope.poi3 = fav[fav.length-1].Name;
+            $scope.src3 = fav[fav.length-1].Picture;
+            $scope.POIID3 = fav[fav.length-1].ID;
+            $scope.poi4 = fav[fav.length-2].Name;
+            $scope.src4 = fav[fav.length-2].Picture;
+            $scope.POIID4 = fav[fav.length-2].ID;
+        }
+        else if(fav.length == 1){
+            $scope.hideText1 = "true";
+            $scope.hidePOI11 = "false";
+            $scope.hidePOI21 = "true";
+            $scope.poi3 = fav[0].Name;
+            $scope.src3 = fav[0].Picture;
+            $scope.POIID3 = fav[0].ID;
+        }
+        else{
+            $scope.hideText1 = "false";
+            $scope.hidePOI11 = "true";
+            $scope.hidePOI21 = "true";
         }
     });
+*/
+
+
+    if(sessionStorage.getItem("fav")){
+        var fav = JSON.parse(sessionStorage.getItem("fav"));
+        if(fav.length > 1){
+            $scope.hideText1 = "true";
+            $scope.hidePOI11 = "false";
+            $scope.hidePOI21 = "false";
+            $scope.poi3 = fav[fav.length-1].Name;
+            $scope.src3 = fav[fav.length-1].Picture;
+            $scope.POIID3 = fav[fav.length-1].ID;
+            $scope.poi4 = fav[fav.length-2].Name;
+            $scope.src4 = fav[fav.length-2].Picture;
+            $scope.POIID4 = fav[fav.length-2].ID;
+        }
+        else if(fav.length == 1){
+            $scope.hideText1 = "true";
+            $scope.hidePOI11 = "false";
+            $scope.hidePOI21 = "true";
+            $scope.poi3 = fav[0].Name;
+            $scope.src3 = fav[0].Picture;
+            $scope.POIID3 = fav[0].ID;
+        }
+        else{
+            $scope.hideText1 = "false";
+            $scope.hidePOI11 = "true";
+            $scope.hidePOI21 = "true";
+        }
+    }
+    setTimeout(() => {
+        if(sessionStorage.getItem("ref") == "true"){
+            $route.reload();
+            sessionStorage.setItem("ref", "false");
+        }
+    }, 300)
+
 
     $scope.hideText = function(){
         return $scope.hideText1 == "true";
@@ -69,10 +156,25 @@ angular.module('myApp')
             $scope.numOfViews = response.data[0];
             $scope.descr = response.data[1];
             $scope.rank = response.data[2];
-            $scope.rev1 = response.data[3][0];
-            $scope.date1 = response.data[3][1];
-            $scope.rev2 = response.data[4][0];
-            $scope.date2 = response.data[4][1];
+            $scope.rank = response.data[2];
+            if(response.data[3]){
+                $scope.rev1 = response.data[3][0] + ",";
+                $scope.date1 = response.data[3][1];
+                if(response.data[4]){
+                    $scope.rev2 = response.data[4][0] + ",";
+                    $scope.date2 = response.data[4][1];
+                }
+                else{
+                    $scope.rev2 = "";
+                    $scope.date2 = "";
+                }
+            }
+            else{
+                $scope.rev1 = "There are no reviews";
+                $scope.date1 = "";
+                $scope.rev2 = "";
+                $scope.date2 = "";
+            }
         });
     }
     
@@ -91,6 +193,8 @@ angular.module('myApp')
             document.getElementById('POI').style.display = "none";
         }
     }
+
+
     
 });
 

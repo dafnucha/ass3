@@ -8,8 +8,13 @@ angular.module('myApp')
             "question": $scope.question,
             "answer": $scope.answer
         }).then(function(response){ 
-            $window.alert("your password: " + response.data[0].Password);
-            location.href='#!login';
+            if(response.data[0]){
+                $window.alert("your password: " + response.data[0].Password);
+                location.href='#!login';
+            }
+            else{
+                $window.alert("Wrong user name or answer");
+            }
         }, function errorCallback(response) {
         });
     };

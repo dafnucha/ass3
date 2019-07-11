@@ -43,10 +43,25 @@ angular.module('myApp')
             $scope.numOfViews = response.data[0];
             $scope.descr = response.data[1];
             $scope.rank = response.data[2];
-            $scope.rev1 = response.data[3][0];
-            $scope.date1 = response.data[3][1];
-            $scope.rev2 = response.data[4][0];
-            $scope.date2 = response.data[4][1];
+            $scope.rank = response.data[2];
+            if(response.data[3]){
+                $scope.rev1 = response.data[3][0] + ",";
+                $scope.date1 = response.data[3][1];
+                if(response.data[4]){
+                    $scope.rev2 = response.data[4][0] + ",";
+                    $scope.date2 = response.data[4][1];
+                }
+                else{
+                    $scope.rev2 = "";
+                    $scope.date2 = "";
+                }
+            }
+            else{
+                $scope.rev1 = "There are no reviews";
+                $scope.date1 = "";
+                $scope.rev2 = "";
+                $scope.date2 = "";
+            }
         });
     }
 

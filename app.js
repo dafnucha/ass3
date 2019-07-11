@@ -1,5 +1,3 @@
-
-
 let app = angular.module('myApp', ["ngRoute"]);
 
 app.config(function($routeProvider)  {
@@ -45,33 +43,21 @@ angular.module('myApp')
         $http.get('http://localhost:3000/getFavorite/' +  $scope.user).then(function(response){
             $scope.fav = response.data;
             sessionStorage.setItem("fav",JSON.stringify($scope.fav));
+            sessionStorage.setItem("ref", "true");
+            $scope.countFav = $scope.fav.length;
         });
     }
 
     $scope.$on('m', function(event, message){
         $scope.user=sessionStorage.getItem("user");
-        /*
-        if(!$scope.user || $scope.user=="guest"){
-            $scope.user = "guest";
-            $scope.logged2=true;
-            sessionStorage.setItem("user","guest");
-            $scope.homeLink = "#!";
-            $scope.isloginLink = "#!login";
-            $scope.isloginText = " Please log in";
-            $scope.fav = [];
-            sessionStorage.setItem("fav",$scope.fav);
-        }
-        else{
-            */
-                getFav();
-                $scope.isloginText = " Logout";
-                $scope.homeLink = "#!logged";
-                $scope.isloginLink = "#!";
-                setTimeout(()=>{
-                    $scope.countFav = $scope.fav.length;
-                },1000);
-                $scope.logged2= false;
-            //}
+        getFav();
+        $scope.isloginText = " Logout";
+        $scope.homeLink = "#!logged";
+        $scope.isloginLink = "#!";
+        setTimeout(()=>{
+            $scope.countFav = $scope.fav.length;
+        },1000);
+        $scope.logged2= false;
     })
     
     $scope.user=sessionStorage.getItem("user");
